@@ -3,16 +3,24 @@
 import Contact from "../models/contactModel.js";
 
 export const addcontact = async (req, res) => {
-  try {
-    const contactData = new Contact(req.body);
-    if (!contactData) {
-      return res.status(404).json({ msg: "Contact data not Found" });
-    }
+  const { name, email, mobile, message, acceptTnC } = req.body;
 
-    const saveData = await contactData.save();
-    res.status(200).json(saveData);
+  try {
+    // Create a new contact
+    const contact = new Contact({
+      name,
+      email,
+      mobile,
+      message,
+      acceptTnC,
+    });
+
+    // Save the contact
+    await contact.save();
+    res.status(201).json({ message: 'Contact saved successfully' });
   } catch (error) {
-    res.status(500).json({ error: error });
+    console.error('Error saving contact:', error);
+    res.status(400).json({ error: error.message });
   }
 };
 
