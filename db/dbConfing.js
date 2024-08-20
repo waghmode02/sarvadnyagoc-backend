@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-import dotenv from "dotenv"
-dotenv.config({path:".env"});
+
 const MONGODB_URI = process.env.URI;
 
 mongoose.connect(MONGODB_URI, {
